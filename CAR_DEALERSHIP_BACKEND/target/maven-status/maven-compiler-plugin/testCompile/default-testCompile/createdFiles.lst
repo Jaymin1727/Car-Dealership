@@ -1,0 +1,4 @@
+com\cardealership\backend\controller\VehicleControllerTest.class
+com\cardealership\backend\service\VehicleServiceTest.class
+com\cardealership\backend\controller\AuthControllerTest.class
+com\cardealership\backend\service\AuthServiceTest.class

@@ -1,0 +1,260 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+/* Background Effects */
+.bgRadial {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0, 102, 255, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(0, 0, 0, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 20%, rgba(0, 102, 255, 0.03) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.bgGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+}
+
+[data-theme="dark"] .bgGrid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* 3D Canvas */
+.canvasWrapper {
+  position: absolute;
+  inset: 0;
+  left: 45%;
+  width: 55%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Hero Content — sits on top of the canvas */
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 0 var(--space-8);
+  padding-top: var(--navbar-height);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-8);
+  pointer-events: none; /* Canvas handles drag; let events through */
+}
+
+/* Allow button clicks */
+.ctaGroup, .stats {
+  pointer-events: all;
+}
+
+/* Eyebrow */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.eyebrowDot {
+  width: 4px;
+  height: 4px;
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+}
+
+/* Headlines */
+.headlines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.brandName {
+  font-family: var(--font-primary);
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--color-text);
+  line-height: 0.95;
+  user-select: none;
+}
+
+.brandDot {
+  color: var(--color-accent);
+  font-weight: 300;
+  margin: 0 0.1em;
+}
+
+.subHeadline1 {
+  font-family: var(--font-primary);
+  font-size: clamp(var(--fs-xl), 3vw, var(--fs-3xl));
+  font-weight: 300;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.subHeadline2 {
+  font-size: clamp(var(--fs-base), 2vw, var(--fs-xl));
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.02em;
+}
+
+/* CTA Buttons */
+.ctaGroup {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.ctaPrimary {
+  padding: 0.875rem 2rem !important;
+  font-size: var(--fs-sm) !important;
+  letter-spacing: 0.06em !important;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ctaArrow {
+  font-size: var(--fs-base);
+  transition: transform var(--transition-fast);
+}
+
+.ctaPrimary:hover .ctaArrow {
+  transform: translateX(4px);
+}
+
+.ctaSecondary {
+  padding: 0.875rem 2rem !important;
+  font-size: var(--fs-sm) !important;
+  letter-spacing: 0.06em !important;
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  gap: var(--space-8);
+  margin-top: var(--space-6);
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.statValue {
+  font-family: var(--font-primary);
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+/* Scroll Indicator */
+.scrollIndicator {
+  position: absolute;
+  bottom: var(--space-8);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.scrollDot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+}
+
+.scrollLabel {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .content {
+    padding: 0 var(--space-5);
+    padding-top: var(--navbar-height);
+    align-items: center;
+    text-align: center;
+  }
+
+  .eyebrow {
+    justify-content: center;
+  }
+
+  .stats {
+    gap: var(--space-5);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .ctaGroup {
+    justify-content: center;
+  }
+
+  .canvasWrapper {
+    opacity: 0.7;
+    left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats {
+    gap: var(--space-4);
+  }
+
+  .ctaGroup {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    justify-content: center;
+  }
+}
