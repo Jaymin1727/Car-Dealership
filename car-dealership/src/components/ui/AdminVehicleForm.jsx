@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X, Save, Trash2, Package, RefreshCw } from 'lucide-react';
 import { useApp } from '../../store/AppContext';
-import styles from './AdminVehicleForm.module.css';
+import styles from '../../styles/ui/AdminVehicleForm.module.css';
 
 const EMPTY_VEHICLE = {
   name: '',
@@ -35,7 +35,6 @@ export default function AdminVehicleForm({ mode = 'add', vehicle = null, onClose
   const [activeTab, setActiveTab] = useState('basic');
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
     setForm(vehicle || EMPTY_VEHICLE);
   }, [vehicle]);
 
@@ -44,7 +43,6 @@ export default function AdminVehicleForm({ mode = 'add', vehicle = null, onClose
   const handleSubmit = async (e) => {
     e.preventDefault();
     let result;
-    // Map tags array to string if it is an array
     const formattedForm = {
       ...form,
       tags: Array.isArray(form.tags) ? form.tags.join(',') : form.tags
@@ -85,7 +83,6 @@ export default function AdminVehicleForm({ mode = 'add', vehicle = null, onClose
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 20, opacity: 0 }}
     >
-      {/* Header */}
       <div className={styles.formHeader}>
         <div>
           <h3 className={styles.formTitle}>
@@ -100,8 +97,6 @@ export default function AdminVehicleForm({ mode = 'add', vehicle = null, onClose
           <X size={16} />
         </button>
       </div>
-
-      {/* Restock Mode */}
       {mode === 'restock' && (
         <div className={styles.restockPanel}>
           <Package size={40} className={styles.restockIcon} />
@@ -124,8 +119,6 @@ export default function AdminVehicleForm({ mode = 'add', vehicle = null, onClose
           <p className={styles.restockCurrentStock}>Current: {vehicle?.stock} / {vehicle?.maxStock}</p>
         </div>
       )}
-
-      {/* Add/Edit Mode */}
       {(mode === 'add' || mode === 'edit') && (
         <form className={styles.form} onSubmit={handleSubmit} id="vehicle-form">
           {/* Tabs */}
@@ -141,8 +134,6 @@ export default function AdminVehicleForm({ mode = 'add', vehicle = null, onClose
               </button>
             ))}
           </div>
-
-          {/* Basic Info */}
           {activeTab === 'basic' && (
             <div className={styles.fields}>
               <div className={styles.fieldGroup}>
@@ -198,8 +189,6 @@ export default function AdminVehicleForm({ mode = 'add', vehicle = null, onClose
               </label>
             </div>
           )}
-
-          {/* Specs */}
           {activeTab === 'specs' && (
             <div className={styles.fields}>
               <div className={styles.row2}>
@@ -238,12 +227,29 @@ export default function AdminVehicleForm({ mode = 'add', vehicle = null, onClose
               </div>
             </div>
           )}
-
-          {/* Media */}
           {activeTab === 'media' && (
             <div className={styles.fields}>
               <div className={styles.fieldGroup}>
-                <label className={styles.label}>Image URL</label>
+                <label className={styles.label}>Image File</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className={styles.input}
+                  onChange={e => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        update('image', reader.result);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                  id="field-image-upload"
+                />
+              </div>
+              <div className={styles.fieldGroup}>
+                <label className={styles.label}>Or Image URL</label>
                 <input className={styles.input} value={form.image} onChange={e => update('image', e.target.value)} placeholder="https://..." id="field-image" />
               </div>
               {form.image && (
@@ -253,8 +259,6 @@ export default function AdminVehicleForm({ mode = 'add', vehicle = null, onClose
               )}
             </div>
           )}
-
-          {/* Footer Actions */}
           <div className={styles.formActions}>
             {mode === 'edit' && (
               <button type="button" className={`btn ${styles.deleteBtn}`} onClick={handleDelete} id="delete-vehicle-btn">

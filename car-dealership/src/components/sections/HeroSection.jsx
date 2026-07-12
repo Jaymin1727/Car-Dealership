@@ -4,12 +4,8 @@ import { useGLTF, Environment, ContactShadows, OrbitControls, Float } from '@rea
 import { motion, useScroll, useTransform } from 'framer-motion';
 import * as THREE from 'three';
 import CountUp from '../common/CountUp';
-import styles from './HeroSection.module.css';
+import styles from '../../styles/sections/HeroSection.module.css';
 
-// ============================================================
-// BMW-Style Car Model — Loads ferrari.glb from Three.js CDN
-// Applies custom glossy black + BMW blue accent materials
-// ============================================================
 function CarModel({ started }) {
   const group = useRef();
   const { scene } = useGLTF(
@@ -20,13 +16,9 @@ function CarModel({ started }) {
 
   useEffect(() => {
     if (!scene) return;
-
-    // Apply premium materials to the car
     scene.traverse((child) => {
       if (child.isMesh) {
         const name = child.name.toLowerCase();
-
-        // Main body — glossy deep black (BMW Frozen Black style)
         if (
           name.includes('body') ||
           name.includes('hood') ||
@@ -40,8 +32,6 @@ function CarModel({ started }) {
             envMapIntensity: 1.8,
           });
         }
-
-        // Glass
         if (name.includes('glass') || name.includes('window') || name.includes('windshield')) {
           child.material = new THREE.MeshStandardMaterial({
             color: new THREE.Color(0x334455),
@@ -52,8 +42,6 @@ function CarModel({ started }) {
             envMapIntensity: 2,
           });
         }
-
-        // Wheels / tyres
         if (name.includes('wheel') || name.includes('tire') || name.includes('tyre')) {
           wheelsRef.current.push(child);
           child.material = new THREE.MeshStandardMaterial({
@@ -62,8 +50,6 @@ function CarModel({ started }) {
             roughness: 0.8,
           });
         }
-
-        // Rims
         if (name.includes('rim') || name.includes('spoke')) {
           child.material = new THREE.MeshStandardMaterial({
             color: new THREE.Color(0xcccccc),
@@ -71,8 +57,6 @@ function CarModel({ started }) {
             roughness: 0.1,
           });
         }
-
-        // Interior
         if (name.includes('interior') || name.includes('seat') || name.includes('steering')) {
           child.material = new THREE.MeshStandardMaterial({
             color: new THREE.Color(0x1a1a1a),
@@ -86,13 +70,9 @@ function CarModel({ started }) {
       }
     });
   }, [scene]);
-
-  // Wheel spin on animation start
   useFrame(() => {
     if (!group.current || !started) return;
     const t = clock.current.getElapsedTime();
-
-    // Wheel rotation
     wheelsRef.current.forEach((wheel) => {
       wheel.rotation.x = t * 1.5;
     });
@@ -103,13 +83,7 @@ function CarModel({ started }) {
       <primitive object={scene} scale={1.1} position={[0, -0.35, 0]} />
     </group>
   );
-}
-
-// ============================================================
-// Fallback Car — premium SVG-based 3D-ish representation
-// Used while GLB loads or if fetch fails
-// ============================================================
-function FallbackCar() {
+} function FallbackCar() {
   const meshRef = useRef();
   useFrame((state) => {
     if (meshRef.current) {
@@ -119,22 +93,18 @@ function FallbackCar() {
 
   return (
     <group ref={meshRef}>
-      {/* Car body */}
       <mesh position={[0, 0, 0]} castShadow>
         <boxGeometry args={[3.8, 0.55, 1.7]} />
         <meshStandardMaterial color="#0a0a0a" metalness={0.95} roughness={0.05} />
       </mesh>
-      {/* Cabin */}
       <mesh position={[0.1, 0.5, 0]} castShadow>
         <boxGeometry args={[2.0, 0.5, 1.55]} />
         <meshStandardMaterial color="#111111" metalness={0.9} roughness={0.1} />
       </mesh>
-      {/* Windows */}
       <mesh position={[0.1, 0.52, 0]}>
         <boxGeometry args={[1.8, 0.4, 1.56]} />
         <meshStandardMaterial color="#334455" transparent opacity={0.4} metalness={0.1} roughness={0} />
       </mesh>
-      {/* Wheels */}
       {[[-1.3, -0.28, 0.92], [1.3, -0.28, 0.92], [-1.3, -0.28, -0.92], [1.3, -0.28, -0.92]].map((pos, i) => (
         <mesh key={i} position={pos} rotation={[Math.PI / 2, 0, 0]} castShadow>
           <cylinderGeometry args={[0.33, 0.33, 0.22, 32]} />
@@ -143,12 +113,7 @@ function FallbackCar() {
       ))}
     </group>
   );
-}
-
-// ============================================================
-// Scene Lighting
-// ============================================================
-function SceneLighting() {
+} function SceneLighting() {
   return (
     <>
       <ambientLight intensity={0.4} />
@@ -168,27 +133,16 @@ function SceneLighting() {
         intensity={1.5}
         castShadow
       />
-      {/* Blue accent light — BMW feel */}
       <pointLight position={[-4, 1, -2]} intensity={0.8} color="#0066ff" />
       <pointLight position={[4, 1, -2]} intensity={0.4} color="#0044cc" />
     </>
   );
-}
-
-// ============================================================
-// Stats Data
-// ============================================================
-const STATS = [
+} const STATS = [
   { value: 500, suffix: '+', label: 'Vehicles' },
   { value: 50, suffix: '+', label: 'BMW Models' },
   { value: 15, suffix: '', label: 'Years Exp.' },
   { value: 4.9, suffix: '', label: 'Rating', decimals: 1 },
-];
-
-// ============================================================
-// Hero Section
-// ============================================================
-export default function HeroSection({ onExploreClick }) {
+]; export default function HeroSection({ onExploreClick }) {
   const containerRef = useRef(null);
   const [started, setStarted] = useState(false);
   const [glbError] = useState(false);
@@ -197,13 +151,10 @@ export default function HeroSection({ onExploreClick }) {
     target: containerRef,
     offset: ['start start', 'end start'],
   });
-
-  // Parallax transforms
   const carY = useTransform(scrollYProgress, [0, 1], [0, -160]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
   const textY = useTransform(scrollYProgress, [0, 0.5], [0, -80]);
 
-  // Start animation after mount
   useEffect(() => {
     const timer = setTimeout(() => setStarted(true), 600);
     return () => clearTimeout(timer);
@@ -211,11 +162,10 @@ export default function HeroSection({ onExploreClick }) {
 
   return (
     <section className={styles.hero} ref={containerRef} id="hero">
-      {/* Background radial lighting */}
+
       <div className={styles.bgRadial} />
       <div className={styles.bgGrid} />
 
-      {/* 3D Canvas — Car */}
       <motion.div
         className={styles.canvasWrapper}
         style={{ y: carY, opacity: heroOpacity }}
@@ -266,13 +216,10 @@ export default function HeroSection({ onExploreClick }) {
           <Environment preset="city" />
         </Canvas>
       </motion.div>
-
-      {/* Hero Content */}
       <motion.div
         className={styles.content}
         style={{ y: textY }}
       >
-        {/* Eyebrow */}
         <motion.div
           className={styles.eyebrow}
           initial={{ opacity: 0, y: 24 }}
@@ -280,8 +227,6 @@ export default function HeroSection({ onExploreClick }) {
           transition={{ duration: 0.7, delay: 0.4 }}
         >
         </motion.div>
-
-        {/* Main Headline */}
         <div className={styles.headlines}>
           <motion.p
             className={styles.subHeadline1}
@@ -301,8 +246,6 @@ export default function HeroSection({ onExploreClick }) {
             Drive Beyond Ordinary
           </motion.p>
         </div>
-
-        {/* CTA Buttons */}
         <motion.div
           className={styles.ctaGroup}
           initial={{ opacity: 0, y: 24 }}
@@ -328,8 +271,6 @@ export default function HeroSection({ onExploreClick }) {
             Book Test Drive
           </motion.button>
         </motion.div>
-
-        {/* Stats Row */}
         <motion.div
           className={styles.stats}
           initial={{ opacity: 0, y: 20 }}
@@ -346,8 +287,6 @@ export default function HeroSection({ onExploreClick }) {
           ))}
         </motion.div>
       </motion.div>
-
-      {/* Scroll Indicator */}
       <motion.div
         className={styles.scrollIndicator}
         initial={{ opacity: 0 }}

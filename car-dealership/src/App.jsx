@@ -7,13 +7,15 @@ import Footer from './components/layout/Footer';
 import HeroSection from './components/sections/HeroSection';
 import InventorySection from './components/sections/InventorySection';
 import AnalyticsSection from './components/sections/AnalyticsSection';
+import DashboardHero from './components/sections/DashboardHero';
+import AdminInventoryTable from './components/sections/AdminInventoryTable';
 import SearchPanel from './components/ui/SearchPanel';
 import PurchaseModal from './components/ui/PurchaseModal';
 import Toast from './components/ui/Toast';
 
 // Inner App component to use context
 function DealershipApp() {
-  const { setAnalyticsVisible } = useApp();
+  const { setAnalyticsVisible, isAdmin } = useApp();
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
   useEffect(() => {
@@ -36,7 +38,7 @@ function DealershipApp() {
     }, 100);
   };
 
-  const isDashboardRoute = currentPath === '/dashboard';
+  const isDashboardRoute = currentPath === '/dashboard' && isAdmin;
 
   return (
     <>
@@ -47,22 +49,11 @@ function DealershipApp() {
 
       <main>
         {isDashboardRoute ? (
-          <section style={{ padding: '2rem 1.5rem 0', maxWidth: '1180px', margin: '0 auto' }}>
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.08)',
-              border: '1px solid rgba(255, 255, 255, 0.14)',
-              borderRadius: '20px',
-              padding: '1.5rem',
-              marginBottom: '1.5rem',
-            }}>
-              <p style={{ margin: 0, textTransform: 'uppercase', letterSpacing: '0.18em', opacity: 0.75 }}>
-                Dashboard
-              </p>
-              <h1 style={{ margin: '0.4rem 0 0', fontSize: '2rem' }}>Welcome back to your dashboard</h1>
-            </div>
-            <InventorySection />
+          <>
+            <DashboardHero />
+            <AdminInventoryTable />
             <AnalyticsSection />
-          </section>
+          </>
         ) : (
           <>
             <HeroSection onExploreClick={handleExploreClick} />

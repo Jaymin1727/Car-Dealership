@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Edit3, Trash2, Package, X, Settings } from 'lucide-react';
 import { useApp } from '../../store/AppContext';
 import AdminVehicleForm from '../ui/AdminVehicleForm';
-import styles from './AdminDrawer.module.css';
+import styles from '../../styles/layout/AdminDrawer.module.css';
 
 const ACTIONS = [
   { id: 'add', icon: Plus, label: 'Add Vehicle', desc: 'Add a new vehicle to inventory' },

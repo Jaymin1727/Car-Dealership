@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Home, LayoutGrid, BarChart2, Heart, Settings, ChevronRight } from 'lucide-react';
-import styles from './Sidebar.module.css';
+import styles from '../../styles/layout/Sidebar.module.css';
 
 const NAV_ITEMS = [
   { icon: Home, label: 'Home', href: '#hero', id: 'sidebar-home' },

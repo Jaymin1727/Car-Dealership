@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Zap, Fuel, Settings, ShoppingCart, Eye, Star } from 'lucide-react';
 import StockBar from '../common/StockBar';
 import { useApp } from '../../store/AppContext';
-import styles from './VehicleCard.module.css';
+import styles from '../../styles/ui/VehicleCard.module.css';
 
 const CATEGORY_COLORS = {
   Coupe: 'blue',
@@ -30,7 +30,6 @@ export default function VehicleCard({ vehicle, index = 0 }) {
       transition={{ duration: 0.5, delay: (index % 3) * 0.1, ease: [0.4, 0, 0.2, 1] }}
       whileHover={{ y: -6 }}
     >
-      {/* Image */}
       <div className={styles.imageWrapper}>
         {!imgLoaded && <div className={`${styles.imgSkeleton} skeleton`} />}
         <img
@@ -40,34 +39,30 @@ export default function VehicleCard({ vehicle, index = 0 }) {
           loading="lazy"
           onLoad={() => setImgLoaded(true)}
         />
-
-        {/* Badges */}
         <div className={styles.imageBadges}>
           <span className={`badge badge-${badgeColor}`}>{vehicle.category}</span>
-          {vehicle.tags?.slice(0, 1).map(tag => (
+          {(Array.isArray(vehicle.tags)
+            ? vehicle.tags
+            : typeof vehicle.tags === 'string' && vehicle.tags
+              ? vehicle.tags.split(',').map(t => t.trim())
+              : []
+          ).slice(0, 1).map(tag => (
             <span key={tag} className="badge badge-dark">{tag}</span>
           ))}
         </div>
-
-        {/* Featured star */}
         {vehicle.featured && (
           <div className={styles.featuredBadge}>
             <Star size={12} fill="currentColor" />
             Featured
           </div>
         )}
-
-        {/* Sold out overlay */}
         {isSoldOut && (
           <div className={styles.soldOutOverlay}>
             <span>Sold Out</span>
           </div>
         )}
       </div>
-
-      {/* Content */}
       <div className={styles.content}>
-        {/* Header */}
         <div className={styles.header}>
           <div>
             <p className={styles.model}>{vehicle.model} · {vehicle.year}</p>
@@ -78,8 +73,6 @@ export default function VehicleCard({ vehicle, index = 0 }) {
             <span className={styles.price}>${vehicle.price.toLocaleString()}</span>
           </div>
         </div>
-
-        {/* Specs Row */}
         <div className={styles.specs}>
           <div className={styles.specItem}>
             <Zap size={14} className={styles.specIcon} />
@@ -96,14 +89,8 @@ export default function VehicleCard({ vehicle, index = 0 }) {
             <span>{vehicle.fuel}</span>
           </div>
         </div>
-
-        {/* Acceleration */}
         <p className={styles.acceleration}>{vehicle.acceleration}</p>
-
-        {/* Stock Bar */}
         <StockBar stock={vehicle.stock} maxStock={vehicle.maxStock} />
-
-        {/* Actions */}
         <div className={styles.actions}>
           <motion.button
             className={`btn btn-primary ${styles.purchaseBtn} ${isSoldOut ? styles.disabled : ''}`}
@@ -114,7 +101,7 @@ export default function VehicleCard({ vehicle, index = 0 }) {
             id={`purchase-${vehicle.id}`}
           >
             <ShoppingCart size={15} />
-            {isSoldOut ? 'Sold Out' : 'Purchase'}
+            {isSoldOut ? 'Sold Out' : 'Buy'}
           </motion.button>
           <motion.button
             className={`btn btn-ghost ${styles.viewBtn}`}

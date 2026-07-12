@@ -5,7 +5,7 @@ import {
   LogIn, UserPlus, AlertCircle, CheckCircle2, Car
 } from 'lucide-react';
 import { useApp } from '../../store/AppContext';
-import styles from './AuthModal.module.css';
+import styles from '../../styles/ui/AuthModal.module.css';
 
 function getPasswordStrength(pw) {
   let score = 0;
@@ -21,15 +21,13 @@ function getPasswordStrength(pw) {
 
 export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
   const { loginUser, registerUser } = useApp();
-  const [activeTab, setActiveTab] = useState('login'); // 'login' | 'register'
+  const [activeTab, setActiveTab] = useState('login');
 
-  // Login state
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
 
-  // Register state
   const [regName, setRegName] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
@@ -38,7 +36,6 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
   const [regError, setRegError] = useState('');
   const [regSuccess, setRegSuccess] = useState('');
 
-  // Reset form state when modal opens/closes or tab changes
   useEffect(() => {
     if (!isOpen) {
       setLoginEmail('');
@@ -61,7 +58,6 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
     setRegSuccess('');
   }, [activeTab]);
 
-  // Close on Escape
   useEffect(() => {
     const handler = (e) => { if (e.key === 'Escape') onClose(); };
     if (isOpen) document.addEventListener('keydown', handler);
@@ -80,7 +76,9 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
     const result = await loginUser(loginEmail.trim(), loginPassword);
     if (result.success) {
       onClose();
-      onLoginSuccess?.();
+      if (result.isAdmin) {
+        onLoginSuccess?.();
+      }
     } else {
       setLoginError(result.message);
     }
@@ -147,7 +145,6 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
             transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
             id="auth-modal"
           >
-            {/* Header */}
             <div className={styles.header}>
               <button className={styles.closeBtn} onClick={onClose} aria-label="Close" id="auth-close-btn">
                 <X size={16} />
@@ -164,8 +161,6 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                   : 'Join MMotor for the best experience'}
               </p>
             </div>
-
-            {/* Tabs */}
             <div className={styles.tabs}>
               <button
                 className={`${styles.tab} ${activeTab === 'login' ? styles.tabActive : ''}`}
@@ -186,7 +181,6 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
             <div className={styles.body}>
               <AnimatePresence mode="wait">
                 {activeTab === 'login' ? (
-                  /* ===== LOGIN FORM ===== */
                   <motion.form
                     key="login"
                     className={styles.form}
@@ -258,7 +252,6 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                     </button>
                   </motion.form>
                 ) : (
-                  /* ===== REGISTER FORM ===== */
                   <motion.form
                     key="register"
                     className={styles.form}
@@ -290,7 +283,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                           type="text"
                           id="reg-name"
                           className={styles.input}
-                          placeholder="John Doe"
+                          placeholder="User name"
                           value={regName}
                           onChange={(e) => setRegName(e.target.value)}
                           autoComplete="name"
@@ -306,7 +299,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                           type="email"
                           id="reg-email"
                           className={styles.input}
-                          placeholder="you@example.com"
+                          placeholder="user@gmail.com"
                           value={regEmail}
                           onChange={(e) => setRegEmail(e.target.value)}
                           autoComplete="email"
@@ -342,15 +335,14 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                             {[1, 2, 3].map((seg) => (
                               <div
                                 key={seg}
-                                className={`${styles.strengthSegment} ${
-                                  strength.level >= seg
-                                    ? strength.level === 1
-                                      ? styles.strengthWeak
-                                      : strength.level === 2
-                                        ? styles.strengthMedium
-                                        : styles.strengthStrong
-                                    : ''
-                                }`}
+                                className={`${styles.strengthSegment} ${strength.level >= seg
+                                  ? strength.level === 1
+                                    ? styles.strengthWeak
+                                    : strength.level === 2
+                                      ? styles.strengthMedium
+                                      : styles.strengthStrong
+                                  : ''
+                                  }`}
                               />
                             ))}
                           </div>
@@ -383,8 +375,6 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                 )}
               </AnimatePresence>
             </div>
-
-            {/* Footer switch */}
             <div className={styles.footer}>
               {activeTab === 'login' ? (
                 <span>

@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle, XCircle, Info, AlertCircle, X } from 'lucide-react';
 import { useApp } from '../../store/AppContext';
-import styles from './Toast.module.css';
+import styles from '../../styles/ui/Toast.module.css';
 
 const ICONS = {
   success: <CheckCircle size={18} />,

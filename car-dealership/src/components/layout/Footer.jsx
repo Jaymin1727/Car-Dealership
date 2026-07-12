@@ -1,15 +1,13 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import styles from './Footer.module.css';
+import styles from '../../styles/layout/Footer.module.css';
 
 const LINKS = {
-  Models: ['BMW M2', 'BMW M3', 'BMW M4', 'BMW M5', 'BMW M8', 'BMW X5 M'],
+  Models: ['BMW M2', 'BMW M3', 'BMW M4', 'BMW M5'],
   Company: ['About Us', 'Careers', 'Press', 'Contact', 'Showrooms'],
   Services: ['Test Drive', 'Financing', 'Insurance', 'Maintenance', 'Trade-In'],
   Legal: ['Privacy Policy', 'Terms of Service', 'Cookie Policy', 'Accessibility'],
 };
-
-// Inline SVGs for brand icons as Lucide removed them
 const Instagram = ({ size = 24, color = "currentColor", strokeWidth = 2, ...props }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" {...props}>
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -49,11 +47,9 @@ const SOCIALS = [
 export default function Footer() {
   return (
     <footer className={styles.footer} id="footer">
-      {/* Top Section */}
       <div className={styles.top}>
         <div className="container">
           <div className={styles.topInner}>
-            {/* Brand */}
             <div className={styles.brand}>
               <div className={styles.brandLogo}>
                 <span className={styles.logoM}>M</span>
@@ -63,7 +59,6 @@ export default function Footer() {
               <p className={styles.brandDesc}>
                 The ultimate BMW M destination. Premium vehicles, uncompromising quality, extraordinary experiences.
               </p>
-              {/* Newsletter */}
               <div className={styles.newsletter}>
                 <label className={styles.newsletterLabel}>Stay in the fast lane</label>
                 <div className={styles.newsletterRow}>
@@ -79,8 +74,6 @@ export default function Footer() {
                 </div>
               </div>
             </div>
-
-            {/* Link Columns */}
             <div className={styles.linkColumns}>
               {Object.entries(LINKS).map(([title, links]) => (
                 <div key={title} className={styles.linkColumn}>
@@ -98,8 +91,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-
-      {/* Bottom Bar */}
       <div className={styles.bottom}>
         <div className="container">
           <div className={styles.bottomInner}>

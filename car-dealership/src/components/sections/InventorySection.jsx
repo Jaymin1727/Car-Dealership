@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Search } from 'lucide-react';
 import { useApp } from '../../store/AppContext';
 import VehicleCard from '../ui/VehicleCard';
-import styles from './InventorySection.module.css';
+import styles from '../../styles/sections/InventorySection.module.css';
 
 export default function InventorySection() {
   const { filteredVehicles, setSearchPanel } = useApp();
@@ -20,7 +20,6 @@ export default function InventorySection() {
   return (
     <section className={styles.inventory} id="inventory" ref={containerRef}>
       <div className="container">
-        {/* Header */}
         <motion.div
           className={styles.header}
           style={{ y: headerY, opacity: headerOpacity }}
@@ -38,8 +37,6 @@ export default function InventorySection() {
             </button>
           </div>
         </motion.div>
-
-        {/* Grid */}
         <div className={styles.grid}>
           <AnimatePresence mode="popLayout">
             {filteredVehicles.length > 0 ? (

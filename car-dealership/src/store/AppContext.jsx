@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useReducer, useCallback, useEffect } from 'react';
-import mockVehicles from '../data/mockVehicles';
 import authApi from '../api/authApi';
+
 import vehicleApi from '../api/vehicleApi';
 
 // ============================================================
@@ -186,16 +186,15 @@ const AppContext = createContext(null);
 export function AppProvider({ children }) {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
-  // Load vehicles from backend on mount, if logged in
+  // Load vehicles from backend on mount
   const loadVehicles = useCallback(async () => {
-    if (!state.currentUser) return;
     try {
       const data = await vehicleApi.getAllVehicles();
       dispatch({ type: ACTIONS.SET_VEHICLES, payload: data });
     } catch (err) {
-      showToast(err.message || 'Failed to load vehicles', 'error');
+      console.error('Failed to load vehicles:', err);
     }
-  }, [state.currentUser]);
+  }, []);
 
   useEffect(() => {
     loadVehicles();
@@ -333,7 +332,7 @@ export function AppProvider({ children }) {
       const data = await authApi.login(email, password);
       dispatch({ type: ACTIONS.LOGIN_USER, payload: data });
       showToast('Welcome back to M MOTOR');
-      return { success: true };
+      return { success: true, isAdmin: data.role === 'ADMIN' };
     } catch (err) {
       showToast(err.message || 'Login failed', 'error');
       return { success: false, message: err.message };

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShoppingCart, Zap, Fuel, Settings, CheckCircle, Minus, Plus } from 'lucide-react';
 import { useApp } from '../../store/AppContext';
-import styles from './PurchaseModal.module.css';
+import styles from '../../styles/ui/PurchaseModal.module.css';
 
 export default function PurchaseModal() {
   const { purchaseModal, closePurchaseModal, purchaseVehicle, showToast } = useApp();
@@ -50,9 +50,9 @@ export default function PurchaseModal() {
           {/* Modal */}
           <motion.div
             className={styles.modal}
-            initial={{ opacity: 0, scale: 0.9, y: 40 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 40 }}
+            initial={{ opacity: 0, scale: 0.9, x: "-50%", y: "-40%" }}
+            animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
+            exit={{ opacity: 0, scale: 0.9, x: "-50%", y: "-40%" }}
             transition={{ type: 'spring', stiffness: 300, damping: 28 }}
             role="dialog"
             aria-modal="true"

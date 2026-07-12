@@ -7,7 +7,7 @@ import {
 import { TrendingUp, DollarSign, Package, Activity, X } from 'lucide-react';
 import { useApp } from '../../store/AppContext';
 import CountUp from '../common/CountUp';
-import styles from './AnalyticsSection.module.css';
+import styles from '../../styles/sections/AnalyticsSection.module.css';
 
 const PIE_COLORS = ['#0066FF', '#10B981', '#F59E0B', '#6B7280'];
 
@@ -23,11 +23,9 @@ export default function AnalyticsSection() {
   const sectionY = useTransform(scrollYProgress, [0, 1], [60, 0]);
   const sectionOpacity = useTransform(scrollYProgress, [0, 0.6], [0, 1]);
 
-  // Compute stats
   const inventoryValue = useMemo(() => vehicles.reduce((sum, v) => sum + (v.price * v.stock), 0), [vehicles]);
   const totalStock = useMemo(() => vehicles.reduce((sum, v) => sum + v.stock, 0), [vehicles]);
 
-  // Bar Chart Data (Stock by Category)
   const barData = useMemo(() => {
     const counts = {};
     vehicles.forEach(v => {
@@ -36,11 +34,10 @@ export default function AnalyticsSection() {
     return Object.keys(counts).map(name => ({ name, stock: counts[name] }));
   }, [vehicles]);
 
-  // Pie Chart Data (Fuel Distribution)
   const pieData = useMemo(() => {
     const counts = {};
     vehicles.forEach(v => {
-      counts[v.fuel] = (counts[v.fuel] || 0) + 1; // Count models, not stock
+      counts[v.fuel] = (counts[v.fuel] || 0) + 1;
     });
     return Object.keys(counts).map(name => ({ name, value: counts[name] }));
   }, [vehicles]);
@@ -60,7 +57,6 @@ export default function AnalyticsSection() {
       >
         <div className="container">
           <motion.div style={{ y: sectionY, opacity: sectionOpacity }}>
-            {/* Header */}
             <div className={styles.header}>
               <div>
                 <div className="section-eyebrow">Insights</div>
@@ -74,8 +70,6 @@ export default function AnalyticsSection() {
                 <X size={20} />
               </button>
             </div>
-
-            {/* KPI Cards */}
             <div className={styles.kpiGrid}>
               <div className={styles.kpiCard}>
                 <div className={styles.kpiIconWrap}><DollarSign size={20} /></div>
@@ -106,10 +100,7 @@ export default function AnalyticsSection() {
                 </h3>
               </div>
             </div>
-
-            {/* Charts Row */}
             <div className={styles.chartsRow}>
-              {/* Bar Chart */}
               <div className={styles.chartCard}>
                 <h4 className={styles.chartTitle}>Stock by Category</h4>
                 <div className={styles.chartWrapper}>
@@ -126,8 +117,6 @@ export default function AnalyticsSection() {
                   </ResponsiveContainer>
                 </div>
               </div>
-
-              {/* Pie Chart */}
               <div className={styles.chartCard}>
                 <h4 className={styles.chartTitle}>Model Fuel Types</h4>
                 <div className={styles.chartWrapper}>
@@ -153,8 +142,6 @@ export default function AnalyticsSection() {
                 </div>
               </div>
             </div>
-
-            {/* Recent Transactions Table */}
             <div className={styles.tableCard}>
               <h4 className={styles.chartTitle}>Recent Transactions</h4>
               <div className={styles.tableWrapper}>

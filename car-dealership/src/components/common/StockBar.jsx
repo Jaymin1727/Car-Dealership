@@ -1,10 +1,5 @@
-import styles from './StockBar.module.css';
+import styles from '../../styles/common/StockBar.module.css';
 
-/**
- * StockBar — Animated stock progress bar
- * @param {number} stock - Current stock
- * @param {number} maxStock - Maximum stock
- */
 export default function StockBar({ stock, maxStock }) {
   const pct = Math.max(0, Math.min(100, (stock / maxStock) * 100));
   const isLow = pct <= 25;
