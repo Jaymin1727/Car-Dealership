@@ -22,6 +22,8 @@
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-xl), 0 0 80px rgba(0, 102, 255, 0.08);
   overflow: hidden;
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
 }
 
 [data-theme="dark"] .modal {
@@ -418,6 +420,7 @@
   .modal {
     max-width: 100%;
     border-radius: var(--radius-xl);
+    max-height: calc(100dvh - 1rem);
   }
 
   .header {
@@ -434,5 +437,22 @@
 
   .tabs {
     margin: 0 var(--space-4);
+  }
+
+  .formOptions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}
+
+@media (max-width: 360px) {
+  .logoIcon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .title {
+    font-size: var(--fs-lg);
   }
 }

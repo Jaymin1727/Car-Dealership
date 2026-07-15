@@ -16,7 +16,7 @@
   background: var(--color-surface);
   border-radius: var(--radius-2xl);
   width: min(900px, calc(100vw - 2rem));
-  max-height: calc(100vh - 4rem);
+  max-height: min(calc(100vh - 4rem), calc(100dvh - 2rem));
   overflow-y: auto;
   box-shadow: var(--shadow-2xl);
   border: 1px solid var(--color-border-light);
@@ -298,5 +298,64 @@
   }
   .detailsSection {
     padding: var(--space-5);
+  }
+}
+
+@media (max-width: 480px) {
+  .modal {
+    width: calc(100vw - 1rem);
+    max-height: calc(100dvh - 1rem);
+    border-radius: var(--radius-xl);
+    top: 50%;
+  }
+
+  .imageSection {
+    max-height: 180px;
+  }
+
+  .vehicleImage {
+    min-height: 180px;
+  }
+
+  .detailsSection {
+    padding: var(--space-4);
+    gap: var(--space-4);
+  }
+
+  .modalName {
+    font-size: var(--fs-2xl);
+  }
+
+  .specsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+  }
+
+  .specCard {
+    padding: var(--space-2);
+  }
+
+  .successView {
+    padding: var(--space-12) var(--space-4);
+  }
+
+  .successTitle {
+    font-size: var(--fs-2xl);
+  }
+
+  .successTotal {
+    font-size: var(--fs-3xl);
+  }
+}
+
+@media (max-width: 360px) {
+  .specsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .priceRow {
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: flex-start;
   }
 }

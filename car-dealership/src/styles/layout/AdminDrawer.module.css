@@ -263,3 +263,42 @@
     opacity: 0;
   }
 }
+
+@media (max-width: 480px) {
+  .drawerHeader {
+    padding: var(--space-5) var(--space-4) var(--space-4);
+  }
+
+  .vehicleSelector {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .actionList {
+    padding: var(--space-4);
+    gap: var(--space-2);
+  }
+
+  .actionItem {
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr 1fr;
+    padding-top: var(--space-4);
+  }
+
+  .statCard {
+    padding: var(--space-4);
+  }
+}
+
+@media (max-width: 380px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .drawerTitle {
+    font-size: var(--fs-xl);
+  }
+}

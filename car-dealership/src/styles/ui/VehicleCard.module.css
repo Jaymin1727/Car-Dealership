@@ -127,6 +127,8 @@
   letter-spacing: -0.02em;
   color: var(--color-text);
   line-height: 1.2;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .priceBlock {
@@ -157,6 +159,7 @@
   padding: var(--space-3) var(--space-4);
   background: var(--color-bg-alt);
   border-radius: var(--radius-lg);
+  flex-wrap: wrap;
 }
 
 [data-theme="dark"] .specs {
@@ -227,5 +230,35 @@
   }
   .name {
     font-size: var(--fs-lg);
+  }
+  .specs {
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+  }
+  .specItem {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .header {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .priceBlock {
+    text-align: left;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .purchaseBtn,
+  .viewBtn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 }

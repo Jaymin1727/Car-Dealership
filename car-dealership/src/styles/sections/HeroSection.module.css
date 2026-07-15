@@ -52,17 +52,17 @@
   width: 100%;
   padding: 0 var(--space-8);
   padding-top: var(--navbar-height);
+  padding-bottom: var(--space-16);
   max-width: var(--container-max);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-8);
-  pointer-events: none; /* Canvas handles drag; let events through */
 }
 
 /* Allow button clicks */
-.ctaGroup, .stats {
+.ctaGroup, .stats, .eyebrow, .headlines {
   pointer-events: all;
 }
 
@@ -215,11 +215,21 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .content {
-    padding: 0 var(--space-5);
+  /* Switch hero to column layout: text top, canvas bottom */
+  .hero {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 100vh;
     padding-top: var(--navbar-height);
+  }
+
+  .content {
+    padding: var(--space-8) var(--space-5) var(--space-4);
+    padding-top: var(--space-6);
     align-items: center;
     text-align: center;
+    pointer-events: all;
+    flex: 0 0 auto;
   }
 
   .eyebrow {
@@ -236,25 +246,68 @@
     justify-content: center;
   }
 
+  /* Canvas becomes a normal in-flow block below the text */
   .canvasWrapper {
-    opacity: 0.7;
-    left: 0;
+    position: relative;
+    inset: auto;
+    left: auto;
     width: 100%;
+    height: 320px;
+    flex: 0 0 320px;
+    opacity: 1;
   }
 }
 
 @media (max-width: 480px) {
+  .hero {
+    min-height: auto;
+  }
+
+  .content {
+    padding: var(--space-5) var(--space-4) var(--space-3);
+    pointer-events: all;
+    gap: var(--space-5);
+  }
+
+  .canvasWrapper {
+    height: 260px;
+    flex: 0 0 260px;
+  }
+
   .stats {
     gap: var(--space-4);
+    flex-wrap: wrap;
   }
 
   .ctaGroup {
     flex-direction: column;
     align-items: stretch;
+    width: 100%;
   }
 
   .ctaPrimary,
   .ctaSecondary {
     justify-content: center;
+    width: 100%;
+  }
+
+  .scrollIndicator {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .brandName {
+    font-size: clamp(3rem, 15vw, 4rem);
+  }
+
+  .canvasWrapper {
+    height: 220px;
+    flex: 0 0 220px;
+  }
+
+  .stats {
+    gap: var(--space-3);
+    flex-wrap: wrap;
   }
 }

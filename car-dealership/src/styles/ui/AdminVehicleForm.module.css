@@ -243,3 +243,31 @@
   font-size: var(--fs-sm);
   color: var(--color-text-secondary);
 }
+
+@media (max-width: 480px) {
+  .formHeader {
+    padding: var(--space-4);
+  }
+
+  .tabs {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .fields {
+    padding: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .row2 {
+    grid-template-columns: 1fr;
+  }
+
+  .formActions {
+    padding: var(--space-3) var(--space-4) var(--space-4);
+    gap: var(--space-2);
+  }
+
+  .restockPanel {
+    padding: var(--space-8) var(--space-4);
+  }
+}

@@ -16,7 +16,7 @@
 
 .topInner {
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: minmax(280px, 380px) 1fr;
   gap: var(--space-20);
   align-items: start;
 }
@@ -214,5 +214,25 @@
   .bottomInner {
     flex-direction: column;
     text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .top {
+    padding: var(--space-12) 0 var(--space-10);
+  }
+
+  .newsletterRow {
+    flex-direction: column;
+  }
+
+  .newsletterBtn {
+    width: 100% !important;
+    height: 44px !important;
+    border-radius: var(--radius-lg) !important;
+  }
+
+  .footer {
+    margin-top: var(--space-20);
   }
 }

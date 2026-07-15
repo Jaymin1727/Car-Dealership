@@ -346,3 +346,52 @@
     min-height: var(--navbar-height);
   }
 }
+
+@media (max-width: 560px) {
+  .navbar {
+    padding: 0 var(--space-4);
+  }
+
+  .signInBtn span,
+  .profileLabel {
+    display: none;
+  }
+
+  .signInBtn {
+    padding: 0.45rem 0.625rem;
+    gap: 0;
+  }
+
+  .profileBtn {
+    padding: 0.4rem 0.625rem;
+    gap: 0;
+  }
+
+  .actions {
+    gap: var(--space-1);
+  }
+
+  .iconBtn {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 380px) {
+  .logoMotor {
+    font-size: var(--fs-base);
+  }
+
+  .logoM {
+    font-size: var(--fs-xl);
+  }
+
+  .navbar {
+    padding: 0 var(--space-3);
+  }
+
+  .iconBtn {
+    width: 32px;
+    height: 32px;
+  }
+}
