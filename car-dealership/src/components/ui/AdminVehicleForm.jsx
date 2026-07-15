@@ -142,7 +142,7 @@ export default function AdminVehicleForm({ mode = 'add', vehicle = null, onClose
                   className={styles.input}
                   value={form.name}
                   onChange={e => update('name', e.target.value)}
-                  placeholder="BMW M4 Competition"
+                  placeholder="Add car name"
                   required
                   id="field-name"
                 />
@@ -150,7 +150,7 @@ export default function AdminVehicleForm({ mode = 'add', vehicle = null, onClose
               <div className={styles.row2}>
                 <div className={styles.fieldGroup}>
                   <label className={styles.label}>Model</label>
-                  <input className={styles.input} value={form.model} onChange={e => update('model', e.target.value)} placeholder="M4" required id="field-model" />
+                  <input className={styles.input} value={form.model} onChange={e => update('model', e.target.value)} placeholder="Model" required id="field-model" />
                 </div>
                 <div className={styles.fieldGroup}>
                   <label className={styles.label}>Year</label>
